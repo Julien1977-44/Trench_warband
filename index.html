@@ -1601,7 +1601,7 @@ Object.keys(FACTIONS).forEach(function (fid) {
 });
 POWERS.forEach(function (p) { powerById[p.id] = p; });
 
-var state = { faction: null, sin: null, name: "Ma bande", roster: [], nextUid: 1, collapsed: {}, equipOpen: null, powersOpen: null, exportOpen: false, rulesOpen: false, kwDef: null, mode: "recruit", bandsOpen: false, mercOpen: false, confirmBox: null, bandsMsg: null, bandsMsgErr: false };
+var state = { faction: null, sin: null, name: "Ma bande", roster: [], nextUid: 1, collapsed: {}, equipOpen: null, powersOpen: null, exportOpen: false, rulesOpen: false, kwDef: null, mode: "recruit", bandsOpen: false, mercOpen: false, confirmBox: null };
 
 function save() {
   try {
@@ -1978,9 +1978,18 @@ function render() {
       : "Aucune figurine recrutée.<br>Recrutez vos combattants dans la colonne de gauche : chaque fiche affichera profil, mots-clés, capacités, armes et améliorations.") + "</div>";
   }
 
+  if (state.mode === "game" && state.roster.length > 1) {
+    var gp = Math.min(state.gamePage || 0, state.roster.length - 1);
+    h += '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 14px;flex-wrap:wrap">';
+    h += '<button class="btn" data-act="game-page" data-dir="-1"' + (gp === 0 ? ' style="opacity:.35"' : "") + '>‹ Précédent</button>';
+    h += '<span class="badge b-zinc">Profil ' + (gp + 1) + " / " + state.roster.length + '</span>';
+    h += '<button class="btn amber" data-act="game-page" data-dir="1"' + (gp >= state.roster.length - 1 ? ' style="opacity:.35"' : "") + '>Suivant ›</button>';
+    h += "</div>";
+  }
   state.roster.forEach(function (entry, idx) {
     var unit = unitById[entry.unitId];
     if (!unit) return;
+    if (state.mode === "game" && idx !== Math.min(state.gamePage || 0, state.roster.length - 1)) return;
     var c = entryCost(entry);
     var isCollapsed = !!state.collapsed[entry.uid];
     h += '<section class="fiche">';
@@ -2235,53 +2244,17 @@ document.addEventListener("click", function (ev) {
       state.powersOpen = state.powersOpen === uid ? null : uid;
       break;
     case "toggle-rules": state.rulesOpen = !state.rulesOpen; break;
-    case "toggle-mode": state.mode = state.mode === "game" ? "recruit" : "game"; break;
-    case "toggle-bands": state.bandsOpen = !state.bandsOpen; state.bandsMsg = null; break;
-    case "close-bands": state.bandsOpen = false; state.bandsMsg = null; break;
-    case "export-bands-json": {
-      var dumpBands = { bands: getBands() };
-      var jsonBands = JSON.stringify(dumpBands, null, 2);
-      var blobBands = new Blob([jsonBands], { type: "application/json" });
-      var urlBands = URL.createObjectURL(blobBands);
-      var aBands = document.createElement("a");
-      aBands.href = urlBands;
-      aBands.download = "trench-bandes.json";
-      document.body.appendChild(aBands);
-      aBands.click();
-      document.body.removeChild(aBands);
-      setTimeout(function () { URL.revokeObjectURL(urlBands); }, 2000);
-      state.bandsMsg = "Fichier trench-bandes.json téléchargé ✔"; state.bandsMsgErr = false;
+    case "toggle-mode": state.mode = state.mode === "game" ? "recruit" : "game"; if (state.mode === "game") state.gamePage = Math.min(state.gamePage || 0, Math.max(0, state.roster.length - 1)); break;
+    case "game-page": {
+      var dirGp = parseInt(el.getAttribute("data-dir"), 10) || 1;
+      var nR = state.roster.length;
+      if (!nR) break;
+      var curGp = Math.min(state.gamePage || 0, nR - 1);
+      state.gamePage = Math.max(0, Math.min(nR - 1, curGp + dirGp));
       break;
     }
-    case "copy-bands-json": {
-      var taBands = document.getElementById("bandsJsonArea");
-      taBands.select();
-      try { document.execCommand("copy"); state.bandsMsg = "JSON copié ✔"; state.bandsMsgErr = false; } catch (eCp) { state.bandsMsg = "Copie impossible — sélectionnez le JSON et copiez-le manuellement"; state.bandsMsgErr = true; }
-      break;
-    }
-    case "import-bands-json": {
-      var rawBands = (document.getElementById("bandsImportArea").value || "").trim();
-      if (!rawBands) { state.bandsMsg = "Collez d\u2019abord un JSON de sauvegarde dans le champ ci-dessous"; state.bandsMsgErr = true; break; }
-      try {
-        var parsedBands = JSON.parse(rawBands);
-        var listBands = parsedBands && parsedBands.bands ? parsedBands.bands : parsedBands;
-        var nImp = 0;
-        var curBands = getBands();
-        Object.keys(listBands).forEach(function (idBands) {
-          var bbBands = listBands[idBands];
-          if (!bbBands || !bbBands.name || !bbBands.roster) return;
-          var exists = Object.keys(curBands).some(function (cidBands) { return curBands[cidBands].name === bbBands.name && curBands[cidBands].faction === bbBands.faction; });
-          if (!exists) { curBands["imp-" + Date.now() + "-" + idBands] = bbBands; nImp++; }
-        });
-        setBands(curBands);
-        state.bandsMsg = nImp === 0 ? "Aucune nouvelle bande à importer (déjà présentes ?)" : nImp + (nImp > 1 ? " bandes importées ✔" : " bande importée ✔");
-        state.bandsMsgErr = nImp === 0;
-      } catch (eImp) {
-        state.bandsMsg = "JSON invalide — vérifiez le contenu collé";
-        state.bandsMsgErr = true;
-      }
-      break;
-    }
+    case "toggle-bands": state.bandsOpen = !state.bandsOpen; break;
+    case "close-bands": state.bandsOpen = false; break;
     case "toggle-merc": state.mercOpen = !state.mercOpen; break;
     case "close-merc": state.mercOpen = false; break;
     case "confirm-yes": {
@@ -2335,7 +2308,7 @@ document.addEventListener("click", function (ev) {
         state.name = bb.name || "Ma bande";
         state.roster = bb.roster.map(function (e) { return { uid: e.uid, unitId: e.unitId, name: e.name, equip: e.equip || [], powers: e.powers || [], opts: e.opts || [] }; });
         state.nextUid = bb.nextUid || (state.roster.length + 1);
-        state.collapsed = {}; state.equipOpen = null; state.powersOpen = null; state.bandsOpen = false;
+        state.collapsed = {}; state.equipOpen = null; state.powersOpen = null; state.bandsOpen = false; state.gamePage = 0;
       }
       break;
     }
