@@ -1601,7 +1601,7 @@ Object.keys(FACTIONS).forEach(function (fid) {
 });
 POWERS.forEach(function (p) { powerById[p.id] = p; });
 
-var state = { faction: null, sin: null, name: "Ma bande", roster: [], nextUid: 1, collapsed: {}, equipOpen: null, powersOpen: null, exportOpen: false, rulesOpen: false, kwDef: null, mode: "recruit", bandsOpen: false, mercOpen: false, confirmBox: null, bandsMsg: null, bandsMsgErr: false, gameIdx: 0 };
+var state = { faction: null, sin: null, name: "Ma bande", roster: [], nextUid: 1, collapsed: {}, equipOpen: null, powersOpen: null, exportOpen: false, rulesOpen: false, kwDef: null, mode: "recruit", bandsOpen: false, mercOpen: false, confirmBox: null };
 
 function save() {
   try {
@@ -1628,28 +1628,6 @@ function getBands() {
 }
 function setBands(b) {
   try { localStorage.setItem("tc-cour-bandes-v2", JSON.stringify(b)); } catch (e) {}
-}
-function importBandsJson(raw) {
-  raw = (raw || "").trim();
-  if (!raw) { state.bandsMsg = "Aucun JSON à importer — choisissez un fichier .json ou collez le contenu"; state.bandsMsgErr = true; return; }
-  try {
-    var parsedBands = JSON.parse(raw);
-    var listBands = parsedBands && parsedBands.bands ? parsedBands.bands : parsedBands;
-    var nImp = 0;
-    var curBands = getBands();
-    Object.keys(listBands).forEach(function (idBands) {
-      var bbBands = listBands[idBands];
-      if (!bbBands || !bbBands.name || !bbBands.roster) return;
-      var exists = Object.keys(curBands).some(function (cidBands) { return curBands[cidBands].name === bbBands.name && curBands[cidBands].faction === bbBands.faction; });
-      if (!exists) { curBands["imp-" + Date.now() + "-" + idBands] = bbBands; nImp++; }
-    });
-    setBands(curBands);
-    state.bandsMsg = nImp === 0 ? "Aucune nouvelle bande à importer (déjà présentes ?)" : nImp + (nImp > 1 ? " bandes importées ✔" : " bande importée ✔");
-    state.bandsMsgErr = nImp === 0;
-  } catch (eImp) {
-    state.bandsMsg = "JSON invalide — vérifiez le fichier ou le texte collé";
-    state.bandsMsgErr = true;
-  }
 }
 
 function maxPowersFor(unitId) {
@@ -2178,11 +2156,13 @@ function render() {
     });
     h += '<div style="margin-top:14px;padding-top:10px;border-top:1px solid #3f3f46">';
     h += '<div class="lbl">Transfert entre appareils — sauvegarde JSON</div>';
-    h += '<p class="meta" style="margin:4px 0 0">Exportez vos bandes d\u2019un appareil vers un autre : ⬇ Téléchargez le fichier .json ci-contre, puis sur l\u2019autre appareil ouvrez ⬆ Importer et choisissez ce fichier.</p>';
+    h += '<p class="meta" style="margin:4px 0 0">Exportez vos bandes vers un autre appareil : téléchargez (ou copiez) le JSON ci-dessous, puis importez-le sur l\u2019autre appareil avec ⬆ Importer.</p>';
     h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0"><button class="btn amber" data-act="export-bands-json">⬇ Télécharger .json</button><button class="btn" data-act="copy-bands-json">⧉ Copier le JSON</button></div>';
     h += '<textarea readonly id="bandsJsonArea" onclick="this.select()" style="width:100%;height:56px;background:#18181b;color:#a1a1aa;border:1px solid #3f3f46;border-radius:6px;padding:8px;font-family:monospace;font-size:11px;resize:vertical">' + esc(JSON.stringify({ bands: bands })) + '</textarea>';
-    h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0"><button class="btn amber" data-act="import-bands-file">⬆ Importer un fichier .json</button><span class="meta" style="font-size:11px;margin:0">ou collez un JSON ci-dessous :</span></div>';
-    h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0"><input id="bandsImportArea" placeholder="Collez ici le JSON d\u2019un autre appareil…" style="flex:1;min-width:220px;background:#18181b;color:#e4e4e7;border:1px solid #3f3f46;border-radius:6px;padding:8px;font-family:monospace;font-size:11px" /><button class="btn" data-act="import-bands-json">OK</button></div>';
+    h += '<input type="file" id="bandsImportFile" accept=".json,application/json" style="display:none" />';
+    h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0"><button class="btn amber" data-act="import-bands-file">⬆ Importer un fichier .json</button></div>';
+    h += '<div class="lbl" style="margin-top:4px">…ou collez un JSON ci-dessous</div>';
+    h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0"><input id="bandsImportArea" placeholder="Collez ici le JSON d\u2019un autre appareil…" style="flex:1;min-width:220px;background:#18181b;color:#e4e4e7;border:1px solid #3f3f46;border-radius:6px;padding:8px;font-family:monospace;font-size:11px" /><button class="btn" data-act="import-bands-json">⧉ Importer le texte collé</button></div>';
     h += state.bandsMsg ? '<div style="margin:6px 0 0;font-size:12px;font-weight:700;color:' + (state.bandsMsgErr ? "#f87171" : "#86efac") + '">' + esc(state.bandsMsg) + '</div>' : "";
     h += "</div>";
     h += "</div></div></div>";
@@ -2259,56 +2239,8 @@ document.addEventListener("click", function (ev) {
       break;
     case "toggle-rules": state.rulesOpen = !state.rulesOpen; break;
     case "toggle-mode": state.mode = state.mode === "game" ? "recruit" : "game"; break;
-    case "toggle-bands": state.bandsOpen = !state.bandsOpen; state.bandsMsg = null; break;
-    case "close-bands": state.bandsOpen = false; state.bandsMsg = null; break;
-    case "game-prev": state.gameIdx = Math.max(0, (state.gameIdx || 0) - 1); break;
-    case "game-next": state.gameIdx = Math.min(Math.max(0, state.roster.length - 1), (state.gameIdx || 0) + 1); break;
-    case "export-bands-json": {
-      var dumpBands = { bands: getBands() };
-      var jsonBands = JSON.stringify(dumpBands, null, 2);
-      var blobBands = new Blob([jsonBands], { type: "application/json" });
-      var urlBands = URL.createObjectURL(blobBands);
-      var aBands = document.createElement("a");
-      aBands.href = urlBands;
-      aBands.download = "trench-bandes.json";
-      document.body.appendChild(aBands);
-      aBands.click();
-      document.body.removeChild(aBands);
-      setTimeout(function () { URL.revokeObjectURL(urlBands); }, 2000);
-      state.bandsMsg = "Fichier trench-bandes.json téléchargé ✔"; state.bandsMsgErr = false;
-      break;
-    }
-    case "copy-bands-json": {
-      var taBands = document.getElementById("bandsJsonArea");
-      taBands.select();
-      try { document.execCommand("copy"); state.bandsMsg = "JSON copié ✔"; state.bandsMsgErr = false; } catch (eCp) { state.bandsMsg = "Copie impossible — sélectionnez le JSON et copiez-le manuellement"; state.bandsMsgErr = true; }
-      break;
-    }
-    case "import-bands-json": {
-      importBandsJson(document.getElementById("bandsImportArea").value || "");
-      break;
-    }
-    case "import-bands-file": {
-      var fiBands = document.getElementById("bandsFileInput");
-      if (!fiBands) {
-        fiBands = document.createElement("input");
-        fiBands.type = "file";
-        fiBands.id = "bandsFileInput";
-        fiBands.setAttribute("accept", "application/json,.json");
-        fiBands.style.display = "none";
-        document.body.appendChild(fiBands);
-        fiBands.addEventListener("change", function (evF) {
-          var fBands = evF.target.files && evF.target.files[0];
-          if (!fBands) return;
-          var rdBands = new FileReader();
-          rdBands.onload = function () { importBandsJson(String(rdBands.result || "")); render(); };
-          rdBands.readAsText(fBands);
-          evF.target.value = "";
-        });
-      }
-      fiBands.click();
-      break;
-    }
+    case "toggle-bands": state.bandsOpen = !state.bandsOpen; break;
+    case "close-bands": state.bandsOpen = false; break;
     case "toggle-merc": state.mercOpen = !state.mercOpen; break;
     case "close-merc": state.mercOpen = false; break;
     case "confirm-yes": {
