@@ -5,130 +5,146 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Créateur de bande — Trench Crusade (v3)</title>
 <style>
-  :root { font-family: system-ui, -apple-system, sans-serif; background: #09090b; color: #e4e4e7; }
+  :root { font-family: system-ui, -apple-system, sans-serif; background: #f4efe6; color: #27272a; color-scheme: light; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: #09090b; color: #e4e4e7; }
+  body { margin: 0; background: #f4efe6; color: #27272a; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 16px; }
-  h1 { font-family: Georgia, serif; font-size: 26px; color: #fef3c7; margin: 0; }
-  .sub { color: #a1a1aa; font-size: 13px; margin: 4px 0 0; }
-  header.top { border-bottom: 1px solid #7f1d1d; padding-bottom: 16px; margin-bottom: 20px; }
+  h1 { font-family: Georgia, serif; font-size: 26px; color: #7c2d12; margin: 0; }
+  .sub { color: #5b5b64; font-size: 13px; margin: 4px 0 0; }
+  header.top { border-bottom: 1px solid #e3a3a3; padding-bottom: 16px; margin-bottom: 20px; }
   .headrow { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
-  .btn { border: 1px solid #3f3f46; background: #27272a; color: #d4d4d8; padding: 6px 12px; border-radius: 6px; font-size: 13px; cursor: pointer; }
-  .btn:hover { background: #3f3f46; }
-  .btn.amber { border-color: #b45309; background: #78350f; color: #fde68a; font-weight: 600; }
-  .btn.amber:hover { background: #92400e; }
-  .panel { background: #18181b; border: 1px solid #27272a; border-radius: 10px; padding: 12px; margin-top: 12px; }
-  .panel.sin { border-color: #7f1d1d; }
-  .lbl { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #f87171; font-weight: 700; }
+  .btn { border: 1px solid #d4ccba; background: #f1ece1; color: #3f3f46; padding: 6px 12px; border-radius: 6px; font-size: 13px; cursor: pointer; }
+  .btn:hover { background: #e7dfcf; }
+  .btn.amber { border-color: #d6a15b; background: #fde7b6; color: #78350f; font-weight: 600; }
+  .btn.amber:hover { background: #fcd88d; }
+  .panel { background: #ffffff; border: 1px solid #e2dccd; border-radius: 10px; padding: 12px; margin-top: 12px; }
+  .panel.sin { border-color: #e3a3a3; }
+  .lbl { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #b91c1c; font-weight: 700; }
   .sins { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-  .sin { border: 1px solid #3f3f46; background: #18181b; color: #d4d4d8; border-radius: 999px; padding: 5px 14px; font-size: 13px; cursor: pointer; }
-  .sin:hover:not(:disabled) { border-color: #7f1d1d; color: #fca5a5; }
-  .sin.sel { border-color: #f59e0b; background: rgba(146,64,14,.35); color: #fde68a; font-weight: 600; }
+  .sin { border: 1px solid #d4ccba; background: #ffffff; color: #3f3f46; border-radius: 999px; padding: 5px 14px; font-size: 13px; cursor: pointer; }
+  .sin:hover:not(:disabled) { border-color: #e3a3a3; color: #b91c1c; }
+  .sin.sel { border-color: #b45309; background: rgba(251,191,36,.30); color: #92400e; font-weight: 600; }
   .sin:disabled { opacity: .55; cursor: not-allowed; }
   .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-top: 12px; }
-  .stat { background: #18181b; border: 1px solid #27272a; border-radius: 8px; padding: 10px; }
-  .stat .k { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: #71717a; }
-  .stat .v { font-family: Georgia, serif; font-size: 19px; font-weight: 700; color: #fafafa; margin-top: 2px; }
-  .stat .v.amber { color: #fde68a; } .stat .v.red { color: #fb7185; } .stat .v.green { color: #6ee7b7; }
-  .warn { border: 1px solid #9f1239; background: rgba(76,5,25,.4); color: #fda4af; border-radius: 6px; padding: 8px 12px; font-size: 13px; margin-top: 8px; }
-  .hint { border: 1px solid #27272a; background: rgba(24,24,27,.6); color: #a1a1aa; border-radius: 6px; padding: 8px 12px; font-size: 13px; margin-top: 8px; }
+  .stat { background: #ffffff; border: 1px solid #e2dccd; border-radius: 8px; padding: 10px; }
+  .stat .k { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: #6e6e78; }
+  .stat .v { font-family: Georgia, serif; font-size: 19px; font-weight: 700; color: #18181b; margin-top: 2px; }
+  .stat .v.amber { color: #92400e; } .stat .v.red { color: #be123c; } .stat .v.green { color: #047857; }
+  .warn { border: 1px solid #f1a3b4; background: rgba(244,63,94,.10); color: #9f1239; border-radius: 6px; padding: 8px 12px; font-size: 13px; margin-top: 8px; }
+  .hint { border: 1px solid #e2dccd; background: rgba(255,255,255,.75); color: #5b5b64; border-radius: 6px; padding: 8px 12px; font-size: 13px; margin-top: 8px; }
   .layout { display: grid; grid-template-columns: 330px 1fr; gap: 20px; }
   .layout.game { grid-template-columns: 1fr; }
   @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
-  .cat-title { font-family: Georgia, serif; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: #f87171; font-weight: 700; margin: 18px 0 8px; }
-  .unit-card { border: 1px solid #27272a; background: rgba(24,24,27,.7); border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+  .cat-title { font-family: Georgia, serif; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: #b91c1c; font-weight: 700; margin: 18px 0 8px; }
+  .unit-card { border: 1px solid #e2dccd; background: rgba(255,255,255,.8); border-radius: 8px; padding: 10px; margin-bottom: 8px; }
   .unit-card .row { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
-  .uname { font-weight: 600; color: #fafafa; font-size: 14px; }
-  .up { font-size: 11px; color: #71717a; margin-top: 3px; }
-  .cost { font-family: Georgia, serif; font-size: 18px; font-weight: 700; color: #fde68a; }
+  .uname { font-weight: 600; color: #18181b; font-size: 14px; }
+  .up { font-size: 11px; color: #6e6e78; margin-top: 3px; }
+  .cost { font-family: Georgia, serif; font-size: 18px; font-weight: 700; color: #92400e; }
   .badge { display: inline-block; border: 1px solid; border-radius: 4px; padding: 1px 6px; font-size: 10.5px; font-weight: 600; margin: 1px 2px 1px 0; }
-  .b-zinc { background: rgba(63,63,64,.4); color: #d4d4d8; border-color: #52525b; }
-  .b-red { background: rgba(69,10,10,.6); color: #fca5a5; border-color: #991b1b; }
-  .b-amber { background: rgba(69,45,10,.6); color: #fde68a; border-color: #b45309; }
-  .b-green { background: rgba(6,46,32,.6); color: #6ee7b7; border-color: #065f46; }
-  .b-blue { background: rgba(30,58,95,.6); color: #93c5fd; border-color: #1d4ed8; }
-  .fiche { border: 1px solid #27272a; border-radius: 12px; background: linear-gradient(#18181b, #09090b); overflow: hidden; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(0,0,0,.4); }
-  .fhead { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 10px 14px; border-bottom: 1px solid #27272a; background: rgba(24,24,27,.6); cursor: pointer; }
-  .fnum { font-family: Georgia, serif; font-size: 17px; font-weight: 700; color: #f87171; }
-  .fname { width: 170px; background: #09090b; border: 1px solid #52525b; color: #fef3c7; font-weight: 600; border-radius: 4px; padding: 4px 8px; font-size: 13px; }
+  .b-zinc { background: rgba(113,113,122,.12); color: #3f3f46; border-color: #c7bfae; }
+  .b-red { background: rgba(239,68,68,.12); color: #b91c1c; border-color: #e69a9a; }
+  .b-amber { background: rgba(245,158,11,.16); color: #92400e; border-color: #d6a15b; }
+  .b-green { background: rgba(16,185,129,.14); color: #047857; border-color: #6fcfa7; }
+  .b-blue { background: rgba(59,130,246,.12); color: #1d4ed8; border-color: #8fb3f0; }
+  .fiche { border: 1px solid #e2dccd; border-radius: 12px; background: linear-gradient(#ffffff, #fbf8f1); overflow: hidden; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(80,60,20,.15); }
+  .fhead { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 10px 14px; border-bottom: 1px solid #e2dccd; background: rgba(255,255,255,.75); cursor: pointer; }
+  .fnum { font-family: Georgia, serif; font-size: 17px; font-weight: 700; color: #b91c1c; }
+  .fname { width: 170px; background: #ffffff; border: 1px solid #c7bfae; color: #7c2d12; font-weight: 600; border-radius: 4px; padding: 4px 8px; font-size: 13px; }
   .fname:focus { outline: none; border-color: #d97706; }
   .fbody { padding: 14px; }
-  .sec { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #f59e0b; margin: 16px 0 6px; }
+  .sec { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #b45309; margin: 16px 0 6px; }
   .sec:first-child { margin-top: 0; }
-  .flavor { font-style: italic; font-size: 12px; color: #71717a; margin: 4px 0 8px; }
-  table.prof { width: 100%; border-collapse: collapse; border: 1px solid #27272a; border-radius: 8px; overflow: hidden; font-size: 13px; }
-  table.prof th { background: #18181b; color: #a1a1aa; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; padding: 6px; }
-  table.prof td { background: #09090b; padding: 6px; text-align: center; font-weight: 600; }
-  .rule { font-size: 12.5px; line-height: 1.55; color: #d4d4d8; margin: 6px 0; }
-  .rule b { color: #fca5a5; }
-  .item { border: 1px solid #27272a; background: rgba(24,24,27,.6); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; font-size: 13px; }
-  .item .del { color: #fb7185; font-size: 11px; cursor: pointer; float: right; }
-  .item .del:hover { color: #fecdd3; }
-  .meta { font-size: 11px; color: #a1a1aa; margin-top: 4px; }
-  .kw { color: #fca5a5; }
-  .armory { border: 1px solid #27272a; background: rgba(24,24,27,.4); border-radius: 8px; padding: 10px; margin-top: 8px; }
-  .armory .cat { font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: #71717a; margin: 8px 0 4px; }
+  .flavor { font-style: italic; font-size: 12px; color: #6e6e78; margin: 4px 0 8px; }
+  table.prof { width: 100%; border-collapse: collapse; border: 1px solid #e2dccd; border-radius: 8px; overflow: hidden; font-size: 13px; }
+  table.prof th { background: #f3ede0; color: #5b5b64; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; padding: 6px; }
+  table.prof td { background: #ffffff; padding: 6px; text-align: center; font-weight: 600; }
+  .rule { font-size: 12.5px; line-height: 1.55; color: #3f3f46; margin: 6px 0; }
+  .rule b { color: #b91c1c; }
+  .item { border: 1px solid #e2dccd; background: rgba(255,255,255,.75); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; font-size: 13px; }
+  .item .del { color: #be123c; font-size: 11px; cursor: pointer; float: right; }
+  .item .del:hover { color: #9f1239; }
+  .meta { font-size: 11px; color: #5b5b64; margin-top: 4px; }
+  .kw { color: #b91c1c; }
+  .armory { border: 1px solid #e2dccd; background: rgba(255,255,255,.55); border-radius: 8px; padding: 10px; margin-top: 8px; }
+  .armory .cat { font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: #6e6e78; margin: 8px 0 4px; }
   .grid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 5px; }
-  .arm-item { display: flex; gap: 6px; align-items: center; border: 1px solid #27272a; background: #09090b; border-radius: 4px; padding: 5px 8px; font-size: 12px; cursor: pointer; text-align: left; color: #e4e4e7; }
-  .arm-item:hover:not(:disabled) { border-color: #065f46; background: rgba(6,46,32,.3); }
+  .arm-item { display: flex; gap: 6px; align-items: center; border: 1px solid #e2dccd; background: #ffffff; border-radius: 4px; padding: 5px 8px; font-size: 12px; cursor: pointer; text-align: left; color: #27272a; }
+  .arm-item:hover:not(:disabled) { border-color: #6fcfa7; background: rgba(16,185,129,.12); }
   .arm-item:disabled { opacity: .35; cursor: not-allowed; }
-  .arm-item .c { color: #fde68a; } .arm-item .g { color: #93c5fd; } .arm-item .why { margin-left: auto; color: #fb7185; font-size: 10px; }
-  .fixed { border: 1px solid #7f1d1d; background: rgba(69,10,10,.15); border-radius: 8px; padding: 10px; margin-bottom: 6px; }
-  .fpow { border: 1px solid #065f46; background: rgba(6,46,32,.15); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; font-size: 13px; }
-  .fpow .t { color: #a7f3d0; font-weight: 600; }
-  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
-  .modal { width: 100%; max-width: 800px; border: 1px solid #3f3f46; background: #09090b; border-radius: 12px; overflow: hidden; }
-  .modal .mh { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #27272a; }
-  .modal textarea { width: 100%; height: 55vh; background: #09090b; color: #d4d4d8; border: 0; padding: 14px; font-family: ui-monospace, monospace; font-size: 11.5px; resize: none; }
-  .empty { border: 1px dashed #27272a; background: rgba(24,24,27,.3); border-radius: 10px; padding: 40px; text-align: center; color: #71717a; }
-  footer { margin-top: 24px; border-top: 1px solid #27272a; padding-top: 12px; text-align: center; font-size: 11px; color: #52525b; }
-  .rules { border: 1px solid #27272a; background: rgba(24,24,27,.7); border-radius: 8px; padding: 12px; margin-top: 10px; font-size: 13px; line-height: 1.6; color: #d4d4d8; }
-  .rules b { color: #fcd34d; }
+  .arm-item .c { color: #92400e; } .arm-item .g { color: #1d4ed8; } .arm-item .why { margin-left: auto; color: #be123c; font-size: 10px; }
+  .fixed { border: 1px solid #e3a3a3; background: rgba(239,68,68,.06); border-radius: 8px; padding: 10px; margin-bottom: 6px; }
+  .fpow { border: 1px solid #6fcfa7; background: rgba(16,185,129,.07); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; font-size: 13px; }
+  .fpow .t { color: #047857; font-weight: 600; }
+  .modal-bg { position: fixed; inset: 0; background: rgba(40,30,15,.45); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+  .modal { width: 100%; max-width: 800px; border: 1px solid #d4ccba; background: #ffffff; border-radius: 12px; overflow: hidden; }
+  .modal .mh { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #e2dccd; }
+  .modal textarea { width: 100%; height: 55vh; background: #ffffff; color: #3f3f46; border: 0; padding: 14px; font-family: ui-monospace, monospace; font-size: 11.5px; resize: none; }
+  .empty { border: 1px dashed #e2dccd; background: rgba(255,255,255,.4); border-radius: 10px; padding: 40px; text-align: center; color: #6e6e78; }
+  footer { margin-top: 24px; border-top: 1px solid #e2dccd; padding-top: 12px; text-align: center; font-size: 11px; color: #6e6e78; }
+  .rules { border: 1px solid #e2dccd; background: rgba(255,255,255,.8); border-radius: 8px; padding: 12px; margin-top: 10px; font-size: 13px; line-height: 1.6; color: #3f3f46; }
+  .rules b { color: #92400e; }
   .badge.kw { cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
-  .badge.kw:hover { color: #fef3c7; border-color: #b45309; }
+  .badge.kw:hover { color: #7c2d12; border-color: #d6a15b; }
   .fact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; margin-top: 16px; }
-  .fact-card { border: 1px solid #27272a; background: linear-gradient(#18181b, #0c0c0e); border-radius: 12px; padding: 16px; cursor: pointer; text-align: left; }
-  .fact-card:hover { border-color: #b45309; background: linear-gradient(#1c130a, #0c0c0e); }
-  .fact-card h2 { font-family: Georgia, serif; font-size: 18px; margin: 0 0 4px; color: #fef3c7; }
-  .fact-card .fl { font-style: italic; font-size: 12px; color: #a1a1aa; line-height: 1.5; }
+  .fact-card { border: 1px solid #e2dccd; background: linear-gradient(#ffffff, #f6f1e7); border-radius: 12px; padding: 16px; cursor: pointer; text-align: left; }
+  .fact-card:hover { border-color: #d6a15b; background: linear-gradient(#fff6e0, #f6f1e7); }
+  .fact-card h2 { font-family: Georgia, serif; font-size: 18px; margin: 0 0 4px; color: #7c2d12; }
+  .fact-card .fl { font-style: italic; font-size: 12px; color: #5b5b64; line-height: 1.5; }
   .fact-card .tags { margin-top: 10px; }
-  .fact-card .art { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid #27272a; margin-bottom: 10px; display: block; }
+  .fact-card .art { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid #e2dccd; margin-bottom: 10px; display: block; }
   .femblem { height: 30px; vertical-align: -8px; margin-right: 6px; border-radius: 4px; }
-  .upic { width: 52px; height: 52px; object-fit: cover; border-radius: 6px; border: 1px solid #3f3f46; margin-right: 8px; }
-  .fpic { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid #7f1d1d; }
+  .upic { width: 52px; height: 52px; object-fit: cover; border-radius: 6px; border: 1px solid #d4ccba; margin-right: 8px; }
+  .fpic { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid #e3a3a3; }
   .sin img { height: 22px; vertical-align: -6px; margin-right: 6px; border-radius: 3px; }
-  .opt { border: 1px solid #1d4ed8; background: rgba(30,58,95,.25); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; font-size: 13px; }
-  .opt .del { color: #fb7185; font-size: 11px; cursor: pointer; float: right; }
+  .opt { border: 1px solid #8fb3f0; background: rgba(59,130,246,.08); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; font-size: 13px; }
+  .opt .del { color: #be123c; font-size: 11px; cursor: pointer; float: right; }
   .gnav { display: flex; align-items: center; gap: 10px; padding: 8px 0; margin-bottom: 10px; }
-  .gnav.top { position: sticky; top: 0; z-index: 20; background: #09090b; border-bottom: 1px solid #27272a; }
+  .gnav.top { position: sticky; top: 0; z-index: 20; background: #f4efe6; border-bottom: 1px solid #e2dccd; }
   .gnav.bottom { margin-top: 4px; justify-content: space-between; }
   .gbtn { font-size: 20px; min-width: 56px; padding: 10px 14px; }
   .gbtn:disabled { opacity: .3; cursor: not-allowed; }
   .gmid { flex: 1; text-align: center; min-width: 0; }
-  .gcount { font-family: Georgia, serif; font-size: 14px; color: #fde68a; font-weight: 700; }
+  .gcount { font-family: Georgia, serif; font-size: 14px; color: #92400e; font-weight: 700; }
   .gpills { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 6px; }
-  .gpill { border: 1px solid #3f3f46; background: #18181b; color: #a1a1aa; border-radius: 999px; min-width: 30px; padding: 3px 9px; font-size: 12px; cursor: pointer; }
-  .gpill:hover { border-color: #7f1d1d; color: #fca5a5; }
-  .mk { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #27272a; background: rgba(9,9,11,.5); }
-  .mkc { display: flex; align-items: center; gap: 8px; border: 1px solid #3f3f46; border-radius: 10px; padding: 6px 10px; background: #18181b; }
-  .mkc.sang { border-color: #9f1239; background: rgba(76,5,25,.35); }
-  .mkc.bene { border-color: #b45309; background: rgba(120,53,15,.3); }
+  .gpill { border: 1px solid #d4ccba; background: #ffffff; color: #5b5b64; border-radius: 999px; min-width: 30px; padding: 3px 9px; font-size: 12px; cursor: pointer; }
+  .gpill:hover { border-color: #e3a3a3; color: #b91c1c; }
+  .mk { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #e2dccd; background: rgba(255,255,255,.5); }
+  .mkc { display: flex; align-items: center; gap: 8px; border: 1px solid #d4ccba; border-radius: 10px; padding: 6px 10px; background: #ffffff; }
+  .mkc.sang { border-color: #f1a3b4; background: rgba(244,63,94,.10); }
+  .mkc.bene { border-color: #d6a15b; background: rgba(245,158,11,.14); }
   .mkc .mkl { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
-  .mkc.sang .mkl { color: #fda4af; } .mkc.bene .mkl { color: #fde68a; }
-  .mkc .mkv { font-family: Georgia, serif; font-size: 26px; font-weight: 700; min-width: 34px; text-align: center; color: #fafafa; }
-  .mkc .mkb { border: 1px solid #52525b; background: #27272a; color: #e4e4e7; border-radius: 8px; width: 40px; height: 40px; font-size: 22px; line-height: 1; cursor: pointer; }
-  .mkc .mkb:hover { background: #3f3f46; }
+  .mkc.sang .mkl { color: #9f1239; } .mkc.bene .mkl { color: #92400e; }
+  .mkc .mkv { font-family: Georgia, serif; font-size: 26px; font-weight: 700; min-width: 34px; text-align: center; color: #18181b; }
+  .mkc .mkb { border: 1px solid #c7bfae; background: #f1ece1; color: #27272a; border-radius: 8px; width: 40px; height: 40px; font-size: 22px; line-height: 1; cursor: pointer; }
+  .mkc .mkb:hover { background: #e7dfcf; }
   .mkc .mkb:disabled { opacity: .3; cursor: not-allowed; }
+  .mkc.inf { border-color: #a3c76a; background: rgba(132,204,22,.14); }
+  .mkc.inf .mkl { color: #3f6212; }
+  .imp-ok { margin-top: 10px; padding: 8px 10px; border: 1px solid #7bc79a; background: rgba(34,197,94,.12); color: #166534; border-radius: 6px; font-size: 13px; }
+  .imp-err { margin-top: 10px; padding: 8px 10px; border: 1px solid #e69a9a; background: rgba(239,68,68,.10); color: #991b1b; border-radius: 6px; font-size: 13px; }
+  .tabs { display: flex; gap: 6px; margin: 0 0 12px; border-bottom: 1px solid #e2dccd; }
+  .tabbtn { border: 1px solid #d4ccba; border-bottom: none; background: #ffffff; color: #5b5b64; padding: 8px 16px; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 13.5px; font-weight: 600; }
+  .tabbtn:hover { color: #92400e; }
+  .tabbtn.on { background: rgba(245,158,11,.22); border-color: #d6a15b; color: #92400e; }
+  .badge.b-eq { background: rgba(14,165,233,.12); color: #0369a1; border-color: #6fb7dd; }
+  .kwmod { font-size: 11px; color: #5b5b64; margin-right: 4px; }
+  .kwpage h2 { font-family: Georgia, serif; color: #7c2d12; margin: 0 0 4px; }
+  .kwsearch { width: 100%; max-width: 420px; box-sizing: border-box; background: #ffffff; color: #27272a; border: 1px solid #d4ccba; border-radius: 6px; padding: 8px 10px; font-size: 14px; }
+  .kwgrp { font-family: Georgia, serif; color: #92400e; font-size: 15px; border-bottom: 1px solid #d4ccba; margin: 18px 0 8px; padding-bottom: 3px; }
+  .kwrow { border: 1px solid #e2dccd; background: rgba(255,255,255,.75); border-radius: 8px; padding: 8px 12px; margin-bottom: 6px; }
+  .kwrow p { margin: 4px 0 0; font-size: 13px; line-height: 1.6; color: #3f3f46; }
+  .kwrow p.nodef { color: #6e6e78; font-style: italic; }
   .mkr { align-self: center; margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
-  .gpill.on { border-color: #f59e0b; background: rgba(146,64,14,.35); color: #fde68a; font-weight: 700; }
+  .gpill.on { border-color: #b45309; background: rgba(251,191,36,.30); color: #92400e; font-weight: 700; }
 </style>
 </head>
 <body>
 <div class="wrap" id="app">
   <h1>Créateur de bande — Trench Crusade</h1>
   <p class="sub">Chargement de l'application…</p>
-  <noscript><p style="color:#fb7185">⚠ JavaScript est désactivé : cette application en a besoin pour fonctionner. Activez JavaScript dans votre navigateur.</p></noscript>
-  <p class="sub" id="js-fallback" style="color:#fb7185">⚠ Si ce message reste affiché, le script de l'application n'a pas pu s'exécuter dans cet environnement. <span style="color:#a1a1aa">[version v5]</span></p>
+  <noscript><p style="color:#be123c">⚠ JavaScript est désactivé : cette application en a besoin pour fonctionner. Activez JavaScript dans votre navigateur.</p></noscript>
+  <p class="sub" id="js-fallback" style="color:#be123c">⚠ Si ce message reste affiché, le script de l'application n'a pas pu s'exécuter dans cet environnement. <span style="color:#5b5b64">[version v5]</span></p>
 </div>
 <script>
 "use strict";
@@ -1325,7 +1341,7 @@ FACTIONS.raidnaval = {
       rule: { title: "Puissance maléfique", text: "+1 DÉ aux jets de résolution et jets risqués de cette figurine (sauf Course et attaques)." } },
     { id: "rn-hache-abordage", name: "Hache d'abordage", cat: "cac", cost: 10,
       flavor: "Les haches d'abordage des raideurs portent des lames crantées qui mordent les coques et les rambardes ; des runes de ruine et de désespoir gravées dans les hampe font s'effriter le fer à leur contact.",
-      profile: { type: "1 main", portee: "CàC", kw: "PERÇANT, CRITIQUE, RISQUÉ" },
+      profile: { type: "1 main", portee: "CàC", kw: "PERFORANT, CRITIQUE, RISQUÉ" },
       rule: { title: "Abordage", text: "+1 DÉ aux jets de résolution risqués des figurines avec cette règle qui escaladent une surface verticale." } },
     { id: "rn-grand-marteau", name: "Grand marteau/Maillet", cat: "cac", cost: 10 },
     { id: "rn-epee-hache-2m", name: "Épée/Hache à deux mains", cat: "cac", cost: 12, twoHanded: true },
@@ -1348,7 +1364,7 @@ FACTIONS.raidnaval = {
     { id: "rn-couteau", name: "Couteau de tranchée", cat: "cac", cost: 1 },
     { id: "rn-torche-saccage", name: "Torche de saccageur", cat: "cac", cost: 15, res: ["elite"], combo: true, twoHanded: true, specific: true,
       flavor: "Alimentée par les feux du fleuve Phlégéton, la torche du saccageur brûle sans fin d'une lueur infernale : fanal pour les Raideurs, arme brûlante contre l'homme ou le navire.",
-      profile: { type: "2 mains", portee: "CàC", kw: "PERÇANT, BLOC, ENCOMBRANT, FEU" } },
+      profile: { type: "2 mains", portee: "CàC", kw: "PERFORANT, BLOCAGE, ENCOMBRANT, FEU" } },
     { id: "rn-baionnette", name: "Baïonnette", cat: "cac", cost: 2, combo: true },
     { id: "rn-grenades-frag", name: "Grenades à fragmentation", cat: "grenade", cost: 7 },
     { id: "rn-grenades-gaz", name: "Grenades à gaz", cat: "grenade", cost: 10 },
@@ -1623,7 +1639,7 @@ Object.keys(FACTIONS).forEach(function (fid) {
 });
 POWERS.forEach(function (p) { powerById[p.id] = p; });
 
-var state = { faction: null, sin: null, name: "Ma bande", roster: [], nextUid: 1, collapsed: {}, equipOpen: null, powersOpen: null, exportOpen: false, rulesOpen: false, kwDef: null, mode: "recruit", gameIdx: 0, gameScroll: false, bandsOpen: false, mercOpen: false, confirmBox: null };
+var state = { faction: null, sin: null, name: "Ma bande", roster: [], nextUid: 1, collapsed: {}, equipOpen: null, powersOpen: null, exportOpen: false, rulesOpen: false, kwDef: null, mode: "recruit", view: "band", kwQuery: "", importOpen: false, importMsg: "", importOk: false, exportFmt: "text", pendingImport: null, gameIdx: 0, gameScroll: false, bandsOpen: false, mercOpen: false, confirmBox: null };
 
 function save() {
   try {
@@ -1639,7 +1655,7 @@ function load() {
       state.faction = d.faction && FACTIONS[d.faction] ? d.faction : (d.roster.length ? "cour" : null);
       state.name = d.name || "Ma bande";
       state.sin = d.sin || null;
-      state.roster = d.roster.map(function (e) { return { uid: e.uid, unitId: e.unitId, name: e.name, equip: e.equip || [], powers: e.powers || [], opts: e.opts || [], blood: e.blood || 0, bless: e.bless || 0 }; });
+      state.roster = d.roster.map(function (e) { return { uid: e.uid, unitId: e.unitId, name: e.name, equip: e.equip || [], powers: e.powers || [], opts: e.opts || [], blood: e.blood || 0, bless: e.bless || 0, infect: e.infect || 0 }; });
       state.nextUid = d.nextUid || (state.roster.length + 1);
     }
   } catch (e) {}
@@ -1893,9 +1909,9 @@ function fixedEquipHtml(unit) {
   var fx = Array.isArray(unit.fixedEquipment) ? unit.fixedEquipment : [unit.fixedEquipment];
   var h = '<div class="sec">Équipement permanent</div><div class="fixed">';
   fx.forEach(function (fe) {
-    h += '<p style="font-size:13px;margin:4px 0"><b style="color:#fde68a">' + esc(fe.name) + '</b> <span style="font-size:11px;color:#a1a1aa">(inclus — ' + esc(fe.note || "possédé en permanence") + ")</span></p>";
+    h += '<p style="font-size:13px;margin:4px 0"><b style="color:#92400e">' + esc(fe.name) + '</b> <span style="font-size:11px;color:#5b5b64">(inclus — ' + esc(fe.note || "possédé en permanence") + ")</span></p>";
     if (fe.profile) {
-      h += '<table class="prof"><tr><th>Type</th><th>Portée</th><th>Mots-clés</th></tr><tr><td>' + esc(fe.profile.type) + "</td><td>" + esc(fe.profile.portee) + '</td><td><span class="kw">' + esc(fe.profile.kw) + "</span></td></tr></table>";
+      h += '<table class="prof"><tr><th>Type</th><th>Portée</th><th>Mots-clés</th></tr><tr><td>' + esc(fe.profile.type) + "</td><td>" + esc(fe.profile.portee) + '</td><td>' + kwList(fe.profile.kw) + "</td></tr></table>";
     }
     if (fe.rule) h += '<p class="rule"><b>✠ ' + esc(fe.rule.title) + " :</b> " + esc(fe.rule.text) + "</p>";
   });
@@ -1945,6 +1961,238 @@ function gameNav(bottom) {
   h += '<button class="btn gbtn" data-act="game-next" aria-label="Profil suivant"' + (i >= n - 1 ? " disabled" : "") + ">▶</button>";
   return h + "</nav>";
 }
+function buildJson() {
+  return JSON.stringify({ app: "trench-crusade-bande", version: 1, faction: state.faction, name: state.name, sin: state.sin, roster: state.roster, nextUid: state.nextUid }, null, 2);
+}
+function normEntry(e, uid) {
+  var n = function (v) { v = parseInt(v, 10); return isNaN(v) ? 0 : Math.max(0, Math.min(99, v)); };
+  var arr = function (a) { return Array.isArray(a) ? JSON.parse(JSON.stringify(a)) : []; };
+  return { uid: uid, unitId: e.unitId, name: typeof e.name === "string" && e.name ? e.name : unitById[e.unitId].name, equip: arr(e.equip), powers: arr(e.powers), opts: arr(e.opts), blood: n(e.blood), bless: n(e.bless), infect: n(e.infect) };
+}
+function factionOfUnit(unitId) {
+  var found = null;
+  Object.keys(FACTIONS).forEach(function (fid) {
+    if (!found && FACTIONS[fid].units.some(function (u) { return u.id === unitId; })) found = fid;
+  });
+  return found;
+}
+function parseImport(text) {
+  var data;
+  try { data = JSON.parse(text); } catch (err) { return { error: "Ce contenu n’est pas un JSON valide." }; }
+  var list = [];
+  function pick(o) {
+    if (o && typeof o === "object" && Array.isArray(o.roster)) list.push(o);
+  }
+  if (Array.isArray(data)) {
+    if (data.length && data[0] && data[0].unitId) pick({ roster: data });
+    else data.forEach(pick);
+  } else if (data && Array.isArray(data.roster)) {
+    pick(data);
+  } else if (data && typeof data === "object") {
+    Object.keys(data).forEach(function (k) { pick(data[k]); });
+  }
+  if (!list.length) return { error: "Aucune bande reconnue : le JSON doit contenir un champ « roster » (liste des figurines)." };
+  var skipped = 0;
+  var bands = [];
+  list.forEach(function (b) {
+    var roster = [];
+    b.roster.forEach(function (e) {
+      if (e && unitById[e.unitId]) roster.push(normEntry(e, roster.length + 1));
+      else skipped++;
+    });
+    var fid = b.faction && FACTIONS[b.faction] ? b.faction : (roster.length ? factionOfUnit(roster[0].unitId) : null);
+    if (!fid) return;
+    var sin = SINS.some(function (s) { return s.id === b.sin; }) ? b.sin : null;
+    bands.push({ name: typeof b.name === "string" && b.name.trim() ? b.name.trim() : "Bande importée", faction: fid, sin: sin, roster: roster });
+  });
+  if (!bands.length) return { error: "Faction de la bande introuvable dans ce JSON." };
+  return { bands: bands, skipped: skipped };
+}
+function applyBand(b) {
+  state.faction = b.faction;
+  state.name = b.name;
+  state.sin = b.sin;
+  state.roster = b.roster;
+  state.nextUid = b.roster.length + 1;
+  state.collapsed = {};
+  state.equipOpen = null;
+  state.powersOpen = null;
+  state.gameIdx = 0;
+}
+function doImport(text) {
+  var res = parseImport(text);
+  if (res.error) { state.importMsg = res.error; state.importOk = false; render(); return; }
+  var extra = res.skipped ? " " + res.skipped + " figurine(s) inconnue(s) ignorée(s)." : "";
+  if (res.bands.length > 1) {
+    var bs = getBands(), i = 0;
+    res.bands.forEach(function (b) {
+      var sid = String(Date.now()) + "-i" + (i++);
+      while (bs[sid]) sid += "x";
+      bs[sid] = { name: b.name, faction: b.faction, sin: b.sin, roster: b.roster, nextUid: b.roster.length + 1, date: new Date().toLocaleDateString("fr-FR") };
+    });
+    setBands(bs);
+    state.importMsg = "✔ " + res.bands.length + " bandes ajoutées à « Mes bandes »." + extra;
+    state.importOk = true;
+  } else {
+    var b1 = res.bands[0];
+    if (state.roster.length) {
+      state.importOpen = false;
+      state.pendingImport = b1;
+      state.confirmBox = { act: "import-apply", msg: "Remplacer la bande actuelle par « " + b1.name + " » (" + b1.roster.length + " figurine(s)) ?" + extra + " Pensez à sauvegarder la bande actuelle via « Mes bandes » si besoin." };
+    } else {
+      applyBand(b1);
+      state.importMsg = "✔ Bande « " + b1.name + " » importée (" + b1.roster.length + " figurine(s))." + extra;
+      state.importOk = true;
+    }
+  }
+  save();
+  render();
+}
+// ---- Glossaire des mots-clés (Livre de Règles) : définitions complémentaires ----
+var KD2 = {
+  "ACTION": { type: "Trait", text: "Une activité qu’une figurine peut accomplir lors de son activation. Les ACTIONS standards comprennent le Déplacement, la Course, le Tir et le Combat." },
+  "+/−DÉ": { type: "Effet", text: "Des dés qui s’ajoutent aux jets de résolution (voir page 114). Si le mot-clé s’applique à une arme, les dés s’ajoutent uniquement aux jets de réussite des attaques portées avec elle." },
+  "+/−DÉ BLESSURE": { type: "Effet", text: "Des dés qui s’ajoutent aux jets de blessure (voir page 115). Si le mot-clé s’applique à une arme, les dés s’ajoutent uniquement aux jets de blessure des attaques portées avec elle." },
+  "+/−MODIFICATEUR BLESSURE": { type: "Effet", text: "Des modificateurs qui s’appliquent au résultat d’un jet de blessure. Si le mot-clé s’applique à une arme, le modificateur s’ajoute uniquement aux jets de blessure des attaques portées avec elle." },
+  "AUTOMATIQUE": { type: "Effet", text: "Quand vous déclarez une ACTION de Tir et que vous choisissez une arme dotée de ce mot-clé, vous pouvez effectuer un nombre d’attaques de tir égal à X, l’une après l’autre. Ces attaques peuvent prendre pour cible différentes figurines ennemies, pourvu qu’elles se trouvent toutes à 6” ou moins les unes des autres et respectent les critères d’éligibilité standards. Résolvez chaque attaque séparément, en répétant les étapes 2 à 6 de la séquence d’attaque de tir. Tout MARQUEUR SANG ou MARQUEUR BÉNÉDICTION dépensé affecte uniquement le jet de blessure de l’attaque lors de laquelle on le dépense, et ne modifie donc pas les jets de blessure des attaques suivantes.", label: "AUTOMATIQUE (X)" },
+  "BALAYAGE": { type: "Effet", text: "Quand vous déclarez une ACTION de Combat et que vous choisissez une arme dotée de ce mot-clé, vous pouvez effectuer un nombre d’attaques au corps à corps égal à X, l’une après l’autre. Ces attaques peuvent prendre pour cible différentes figurines ennemies avec lesquelles l’attaquant est engagé au corps à corps. Résolvez chaque attaque séparément, en répétant les étapes 2 à 4 de la séquence d’attaque au corps à corps. Tout MARQUEUR SANG ou MARQUEUR BÉNÉDICTION dépensé affecte uniquement le jet de blessure de l’attaque lors de laquelle on le dépense, et ne modifie donc pas les jets de blessure des attaques suivantes.", label: "BALAYAGE (X)" },
+  "BÉNI": { type: "Effet", text: "Quand vous déployez cette figurine pour la première fois de la partie, placez à côté d’elle un nombre de MARQUEURS BÉNÉDICTION égal à X.", label: "BÉNI (X)" },
+  "CONSOMMABLE": { type: "Effet", text: "Durant une campagne (voir page 254), un équipement avec ce mot-clé est perdu à la fin d’une partie où on l’utilise." },
+  "COUVERT": { type: "Effet", text: "Une figurine avec ce mot-clé bénéficie des modificateurs d’attaque Couvert ou Obstacle défendu (voir page 115)." },
+  "DÉPLOYABLE": { type: "Effet", text: "Un équipement représenté par une figurine ou un élément de terrain qui peut être déployé sur le champ de bataille pendant la partie." },
+  "DÉVIATION": { type: "Effet", text: "Certaines armes avec le mot-clé EXPLOSION présentent aussi le mot-clé DÉVIATION. Quand vous effectuez une attaque avec cette arme, désignez une cible et résolvez l’attaque comme décrit dans les règles d’EXPLOSION. Cependant, en cas d’échec au jet de résolution, le projectile dévie au lieu de juste rater. Retranchez le résultat du jet de résolution de 7 pour voir sur quelle distance il dévie. Par exemple, avec un jet de résolution de 4, le point d’impact dévie de (7 – 4) = 3”. Votre adversaire déplace le point d’impact d’autant de pouces dans la direction de son choix en ligne de vue de la cible d’origine vers un point du champ de bataille, un élément de terrain ou le socle d’une autre figurine. Si cela est impossible pour une raison particulière, l’attaque est ratée. Ensuite, résolvez l’attaque comme décrit dans les règles d’EXPLOSION." },
+  "ÉQUIPE-FEU": { type: "Effet", text: "Cette figurine appartient à un groupe de deux figurines, dont chacune doit avoir ce mot-clé. Vous pouvez créer des Équipes-feu quand vous recrutez une bande ou à l’étape d’Intendance. Indiquez sur votre fiche de bande quelles figurines composent les Équipes-feu. Vous pouvez activer en même temps des figurines amies appartenant à la même Équipe-feu. Dans ce cas, vous pouvez effectuer leurs ACTIONS dans l’ordre que vous souhaitez, et vous pouvez passer librement d’une figurine à l’autre. Cependant, si l’activation de l’un des membres de l’Équipe-feu prend fin durant une activation simultanée, celle de son coéquipier s’achève aussi. Une figurine ne peut faire partie que d’une seule Équipe-feu.", force: true },
+  "EXPLOSION": { type: "Effet", text: "Une arme de tir avec le mot-clé EXPLOSION (X”) entraîne une explosion de X pouces de rayon (y compris à la verticale). Quand vous effectuez une attaque avec cette arme, vous devez sélectionner la cible de l’attaque, qui peut être une figurine ennemie ou bien un emplacement du champ de bataille ou un élément de terrain. La cible doit toutefois se trouver en ligne de vue et à portée de l’arme. Si le jet de résolution se solde par un échec, l’attaque rate et rien ne se produit, sauf si l’arme a aussi le mot-clé DÉVIATION (voir « DÉVIATION »). En cas de réussite ou de réussite critique, effectuez un jet de blessure pour chaque figurine ayant une ligne de vue sur la cible du tir et se trouvant dans son rayon d’explosion. Mesurez la portée de l’explosion à partir du centre du socle de la figurine ciblée, ou du centre du point d’impact. Vous devez faire un jet de blessure pour toute figurine dont au moins une partie du socle est dans le rayon d’explosion. De plus, toute figurine amie située à 1” d’une figurine ennemie touchée par l’explosion est aussi touchée. Si vous obtenez une réussite critique, vous ajoutez +1 DÉ BLESSURE au jet de blessure, mais uniquement pour la figurine qui était la cible de l’attaque.", label: "EXPLOSION X”" },
+  "GOLEM": { type: "Effet", text: "Cette figurine considère le résultat Hors de combat comme un résultat À terre, sauf s’il lui a été infligé par un jet de massacre. De plus, vous ne pouvez pas retirer de MARQUEURS SANG d’une figurine amie avec ce mot-clé (mais votre adversaire le peut). Enfin, cette figurine bénéficie des mots-clés IMMUNITÉ PEUR et IMMUNITÉ GAZ, mais ne peut pas avoir le mot-clé ROBUSTE.", force: true },
+  "IGNORE [MODIFICATEUR]": { type: "Effet", text: "Ignorez le modificateur de jet de résolution ou de jet de blessure spécifié. Par exemple, le jet de résolution d’une attaque portée avec une arme de tir dotée du mot-clé IGNORE COUVERT ne subit pas le modificateur de −1 DÉ pour une cible à couvert." },
+  "IGNORE ARMURE": { type: "Effet", text: "Ignorez −DÉS BLESSURE et −MODIFICATEURS BLESSURE de la caractéristique d’armure d’une cible, ainsi que de tout bouclier ou armure dans son équipement, dans le cadre des attaques avec ce mot-clé." },
+  "IMMUNITÉ [MOT-CLÉ]": { type: "Effet", text: "Une figurine dotée du mot-clé IMMUNITÉ [MOT-CLÉ] n’est pas affectée par le mot-clé spécifié. Par exemple, une figurine avec IMMUNITÉ SHRAPNEL est immunisée contre l’effet du mot-clé SHRAPNEL." },
+  "INFILTRATEUR": { type: "Effet", text: "Quand vous déployez cette figurine pour la première fois de la partie, vous pouvez la déployer à tout endroit du champ de bataille, pourvu qu’elle soit hors de la ligne de vue de tous les ennemis et au moins à 8” de l’ennemi le plus proche. Déployez les INFILTRATEURS après les figurines sans ce mot-clé. Déployez normalement, dans votre zone de déploiement, tout INFILTRATEUR que vous ne pouvez déployer dans ces conditions.", force: true },
+  "LANCE-FLAMMES": { type: "Effet", text: "Une attaque de tir effectuée avec une arme dotée de ce mot-clé réussit automatiquement. N’effectuez aucun jet de résolution pour cette attaque. Notez cependant qu’elle ne vous permet donc pas d’obtenir de réussite critique.", force: true },
+  "LOURD": { type: "Effet", text: "Une figurine dotée d’un équipement avec ce mot-clé perd son bonus de charge, elle effectuera donc sa charge uniquement avec sa caractéristique de mouvement, sans d6 supplémentaire. Une arme de tir ou une grenade dotée de ce mot-clé ne permet pas à une figurine, durant la même activation, d’effectuer une attaque de tir en plus d’une ACTION Déplacement, Charge, Repli ou Course. Une figurine est limitée à un seul équipement avec ce mot-clé.", force: true },
+  "MARQUEUR BÉNÉDICTION": { type: "Trait", text: "La figurine se trouve sous l’influence d’une amélioration surnaturelle ou chimique, qui lui offre des bénéfices temporaires (voir « Marqueurs Bénédiction », page 119)." },
+  "MARQUEUR SANG": { type: "Trait", text: "Les MARQUEURS SANG sont placés à côté de figurines souffrant d’une blessure (voir « Marqueurs Sang », page 118)." },
+  "MINÉ": { type: "Effet", text: "Lorsqu’une figurine se déplace en contact avec un marqueur ou un élément de terrain avec le mot-clé MINÉ, une mine explose, sauf si la figurine possède le mot-clé IMMUNITÉ MINÉ. Si la mine explose, elle touche automatiquement la figurine qui l’a déclenchée. Faites pour elle un jet de blessure avec le mot-clé SHRAPNEL et le marqueur ou l’élément de terrain perd le mot-clé MINÉ. Si la figurine n’est pas À terre ou Hors de combat, elle peut poursuivre son déplacement normalement. Les figurines dotées du mot-clé VOL ne déclenchent pas de mine en volant par-dessus, mais uniquement en se posant en contact d’un marqueur ou d’un élément de terrain MINÉ." },
+  "MORTEL": { type: "Effet", text: "Lorsque vous faites un jet de blessure pour une attaque effectuée avec une arme dotée de ce mot-clé, lancez 3d6 et additionnez-les. Les +DÉS BLESSURE ou −DÉS BLESSURE s’appliquent normalement, sauf que vous conservez les trois plus hauts résultats ou les trois plus bas.", force: true },
+  "MUNITIONS": { type: "Effet", text: "Si une figurine possède un équipement avec ce mot-clé, elle peut l’utiliser lors de la prochaine partie à laquelle elle participe. Quand la figurine est déployée, vous devez préciser quelle arme va être dotée de ces MUNITIONS. L’arme gagne le [MOT-CLÉ] jusqu’à la fin de la partie. Vous ne pouvez utiliser de MUNITIONS avec les armes ayant déjà les mots-clés EXPLOSION, FEU, GAZ ou SHRAPNEL. Une arme ne peut avoir deux types de MUNITIONS en même temps.", label: "MUNITIONS (MOT-CLÉ)" },
+  "PERFORANT": { type: "Effet", text: "Une arme avec ce mot-clé réduit de 1 (jusqu’à un minimum de 0) le −MODIFICATEUR BLESSURE total que sa cible obtient de son armure et/ou de ses boucliers. Par exemple, face à une cible avec une armure standard et un bouclier de tranchée, le −MODIFICATEUR BLESSURE passerait de −2 à −1.", force: true },
+  "PISTOLET": { type: "Effet", text: "Un pistolet peut servir d’arme de corps à corps ou d’arme de tir, et peut servir de ces deux façons au cours d’une même activation. En tant qu’arme de tir, il utilise la portée indiquée dans son profil et la caractéristique de tir de la figurine attaquante. En tant qu’arme de corps à corps, il utilise, au choix, la caractéristique de tir ou de corps à corps de l’attaquant, et il peut aussi servir d’arme secondaire." },
+  "RECHARGEMENT": { type: "Effet", text: "L’activation d’une figurine qui effectue une attaque avec une arme dotée de ce mot-clé se termine dès que l’ACTION qui a permis cette attaque s’achève." },
+  "RÉGÉNÉRATION": { type: "Effet", text: "Lorsque vous activez une figurine avec ce mot-clé, vous pouvez lui retirer X MARQUEUR SANG avant d’effectuer ses ACTIONS.", label: "RÉGÉNÉRATION (X)" },
+  "RÉSISTANT": { type: "Effet", text: "L’effet IGNORE ARMURE n’affecte pas les −DÉS BLESSURE et −MODIFICATEURS BLESSURE d’un équipement avec ce mot-clé. IGNORE ARMURE affecte normalement tout autre équipement de la figurine prise pour cible.", force: true },
+  "TENU": { type: "Effet", text: "Cette pièce d’équipement nécessite d’être tenue à la main et ne peut pas être posée. En conséquence, une figurine avec ce mot-clé ne peut être équipée que d’une arme à une main ou d’un bouclier. Elle ne peut être équipée ni d’une arme à deux mains, ni d’une arme et d’un bouclier (même si le bouclier présente la restriction Combo bouclier). Elle peut néanmoins porter des grenades." },
+  "TERRAIN DANGEREUX": { type: "Effet", text: "Si vous activez une figurine se trouvant dans un élément de terrain avec ce mot-clé, ou si une figurine traverse un terrain dangereux lors de son déplacement, vous devez effectuer un jet de résolution risqué pour cette figurine. En cas de réussite, vous poursuivez le déplacement de la figurine, et vous n’avez pas besoin d’effectuer de nouveau jet si elle traverse un autre terrain dangereux dans le cadre de ce déplacement. En cas d’échec, cependant, vous devez effectuer un jet de blessure pour la figurine, et son activation prend fin." },
+  "TERRAIN DIFFICILE": { type: "Effet", text: "Chaque 1” effectué par une figurine dans un élément de terrain avec ce mot-clé compte pour 2”." },
+  "TERRAIN INFRANCHISSABLE": { type: "Effet", text: "Une figurine ne peut traverser ou terminer son mouvement sur un élément de terrain avec ce mot-clé." },
+};
+Object.keys(KD2).forEach(function (k) { if (!KEYWORD_DEFS[k] || KD2[k].force) KEYWORD_DEFS[k] = KD2[k]; });
+
+function kwBase(k) {
+  return String(k).replace(/\s*\(.*\)\s*$/, "").replace(/\s+\d.*$/, "").trim();
+}
+function kwLookup(k) {
+  if (KEYWORD_DEFS[k]) return KEYWORD_DEFS[k];
+  var b = kwBase(k);
+  if (KEYWORD_DEFS[b]) return KEYWORD_DEFS[b];
+  if (/^IGNORE /.test(b) && KEYWORD_DEFS["IGNORE [MODIFICATEUR]"]) {
+    return { type: "Effet", text: KEYWORD_DEFS["IGNORE [MODIFICATEUR]"].text + " (Ici : " + b.slice(7) + ".)" };
+  }
+  if (/^IMMUNITÉ /.test(b)) {
+    return { type: "Effet", text: "Règle générique IMMUNITÉ [MOT-CLÉ] : une figurine dotée de ce mot-clé n’est pas affectée par le mot-clé spécifié (ici, " + b.slice(9) + ")." };
+  }
+  return null;
+}
+function modKey(t) {
+  if (/MODIFICATEURS? BLESSURE/i.test(t)) return "+/−MODIFICATEUR BLESSURE";
+  if (/D[ÉE]S? BLESSURE/i.test(t)) return "+/−DÉ BLESSURE";
+  if (/^[+–−-]\d+ D[ÉE]S?(?![A-Za-z])/i.test(t)) return "+/−DÉ";
+  return null;
+}
+function kwList(str) {
+  var out = "";
+  String(str || "").split(",").forEach(function (t) {
+    t = t.trim();
+    if (!t || t === "–" || t === "-") return;
+    if (/^[+–−-]/.test(t)) {
+      var mk = modKey(t);
+      out += mk ? '<span class="kwmod kw" data-kw="' + esc(mk) + '" style="cursor:pointer;text-decoration:underline dotted" title="Cliquez pour la définition">' + esc(t) + "</span> " : '<span class="kwmod">' + esc(t) + "</span> ";
+    }
+    else out += kwBadge(t);
+  });
+  return out || "–";
+}
+function eqKwBadges(unit, entry) {
+  var have = {};
+  (unit.keywords || []).forEach(function (k) { have[k] = true; });
+  var src = {}, order = [];
+  function scan(it) {
+    if (!it || !it.profile || !it.profile.kw) return;
+    it.profile.kw.split(",").forEach(function (t) {
+      t = t.trim();
+      if (!t || t === "–" || t === "-" || /^[+–−-]/.test(t) || have[t]) return;
+      if (!src[t]) { src[t] = []; order.push(t); }
+      if (src[t].indexOf(it.name) < 0) src[t].push(it.name);
+    });
+  }
+  if (unit.fixedEquipment) (Array.isArray(unit.fixedEquipment) ? unit.fixedEquipment : [unit.fixedEquipment]).forEach(scan);
+  (entry.equip || []).forEach(function (id) { scan(equipById[id]); });
+  return order.map(function (k) {
+    return '<span class="badge b-eq kw" data-kw="' + esc(k) + '" title="Via l’équipement : ' + esc(src[k].join(", ")) + ' — cliquez pour la définition">' + esc(k) + "</span> ";
+  }).join("");
+}
+function allKeywords() {
+  var map = {};
+  Object.keys(KEYWORD_DEFS).forEach(function (k) {
+    if (kwBase(k) !== k && KEYWORD_DEFS[kwBase(k)]) return;
+    map[k] = { name: k, label: KEYWORD_DEFS[k].label, type: KEYWORD_DEFS[k].type, text: KEYWORD_DEFS[k].text };
+  });
+  function add(k) {
+    k = String(k).trim();
+    if (!k || k === "–" || /^[+–−-]/.test(k)) return;
+    var key = KEYWORD_DEFS[k] ? k : kwBase(k);
+    if (map[key]) return;
+    var d = kwLookup(key);
+    map[key] = d ? { name: key, type: d.type, text: d.text } : { name: key, type: "", text: null };
+  }
+  function scanProfile(it) { if (it && it.profile && it.profile.kw) it.profile.kw.split(",").forEach(add); }
+  Object.keys(unitById).forEach(function (id) {
+    var u = unitById[id];
+    (u.keywords || []).forEach(add);
+    if (u.fixedEquipment) (Array.isArray(u.fixedEquipment) ? u.fixedEquipment : [u.fixedEquipment]).forEach(scanProfile);
+  });
+  Object.keys(equipById).forEach(function (id) { scanProfile(equipById[id]); });
+  MERCENARIES.forEach(function (m) { (m.keywords || []).forEach(add); });
+  return Object.keys(map).map(function (k) { return map[k]; });
+}
+function tabBar() {
+  return '<div class="tabs"><button class="tabbtn' + (state.view !== "keywords" ? " on" : "") + '" data-act="tab-band">✠ Ma bande</button><button class="tabbtn' + (state.view === "keywords" ? " on" : "") + '" data-act="tab-kw">📖 Mots-clés</button></div>';
+}
+function kwPage() {
+  var list = allKeywords();
+  var groups = {}, gorder = ["Trait", "Effet", "Mot-clé d’arme"];
+  list.forEach(function (e) {
+    var g = e.text === null ? "Définition à compléter" : (e.type || "Autres").replace(/'/g, "’");
+    if (!groups[g]) { groups[g] = []; if (gorder.indexOf(g) < 0) gorder.push(g); }
+    groups[g].push(e);
+  });
+  gorder = gorder.filter(function (g) { return groups[g] && g !== "Définition à compléter"; }).concat(groups["Définition à compléter"] ? ["Définition à compléter"] : []);
+  var h = '<section class="kwpage"><h2>Mots-clés du jeu</h2>';
+  h += '<p class="meta" style="margin:0 0 10px">' + list.length + ' mots-clés référencés (glossaire du Livre de Règles, tous profils, armes et mercenaires de l’outil).</p>';
+  h += '<input class="kwsearch" id="kwSearch" type="search" placeholder="Rechercher un mot-clé ou un terme…" value="' + esc(state.kwQuery) + '" />';
+  var q = (state.kwQuery || "").toLowerCase();
+  gorder.forEach(function (g) {
+    var arr = groups[g].slice().sort(function (a, b) { return a.name.localeCompare(b.name, "fr"); });
+    h += '<div class="kwgrp" data-grp="1">' + esc(g) + " (" + arr.length + ")</div>";
+    arr.forEach(function (e) {
+      var hay = ((e.label || e.name) + " " + (e.text || "")).toLowerCase();
+      h += '<div class="kwrow" data-s="' + esc(hay) + '"' + (q && hay.indexOf(q) < 0 ? ' style="display:none"' : "") + '><b style="color:#92400e">' + esc(e.label || e.name) + "</b>";
+      if (e.type) h += ' <span class="badge b-zinc">' + esc(e.type) + "</span>";
+      h += e.text === null ? '<p class="nodef">Définition non enregistrée dans l’outil — voir le Glossaire du Livre de Règles (p. 14-19).</p>' : "<p>" + esc(e.text) + "</p>";
+      h += "</div>";
+    });
+  });
+  return h + "</section>";
+}
 function markerCtl(entry, key, label, cls) {
   var v = entry[key] || 0;
   return '<div class="mkc ' + cls + '"><span class="mkl">' + label + '</span>' +
@@ -1954,7 +2202,7 @@ function markerCtl(entry, key, label, cls) {
 }
 function gameStep(d) {
   var n = state.roster.length;
-  if (state.mode !== "game" || n < 2) return;
+  if (state.view === "keywords" || state.mode !== "game" || n < 2) return;
   var j = Math.min(n - 1, Math.max(0, state.gameIdx + d));
   if (j === state.gameIdx) return;
   state.gameIdx = j;
@@ -1969,11 +2217,14 @@ function render() {
   var warnings = computeWarnings(f, st);
 
   var h = "";
+  h += tabBar();
+  h += '<div style="' + (state.view === "keywords" ? "display:none" : "") + '">';
   h += '<header class="top"><div class="headrow"><div><h1>' + (ART.emblems[f.id] ? '<img class="femblem" alt="" src="' + ART.emblems[f.id] + '" />' : "") + f.icon + " " + esc(f.name) + "</h1>";
   h += '<p class="sub">Trench Crusade · Bandes v4 (VF) · ' + esc(f.align) + " · Budget de " + f.budget + " ♛ (ducats)</p></div>";
   h += '<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px"><input class="fname" data-act="rename-band" value="' + esc(state.name) + '" placeholder="Nom de la bande" style="width:190px" title="Nom de la bande" /> <button class="btn amber" data-act="toggle-bands">💾 Mes bandes</button></div>';
   h += '<div><button class="btn amber" data-act="toggle-mode">' + (state.mode === "game" ? "✎ Mode Recrutement" : "⚔ Mode Jeu") + "</button> ";
   h += '<button class="btn amber" data-act="open-export">⬇ Exporter la bande</button> ';
+  h += '<button class="btn amber" data-act="open-import">⬆ Importer (JSON)</button> ';
   h += '<button class="btn" data-act="toggle-rules">✠ Règles de la faction</button> ';
   h += '<button class="btn" data-act="toggle-merc">⚔ Mercenaires (référence)</button> ';
   h += '<button class="btn" data-act="change-faction" title="Retourner à l\u2019écran de choix de la faction">🏠 Retour à l\u2019accueil</button> ';
@@ -2051,16 +2302,16 @@ function render() {
     h += '<span class="fnum">' + (idx + 1) + "</span>";
     if (ART.units[unit.id]) h += '<img class="fpic" alt="" src="' + ART.units[unit.id] + '" />';
     h += '<input class="fname" data-act="rename" data-uid="' + entry.uid + '" value="' + esc(entry.name) + '" />';
-    h += '<span style="font-size:13px;color:#a1a1aa">' + esc(unit.name) + "</span>";
+    h += '<span style="font-size:13px;color:#5b5b64">' + esc(unit.name) + "</span>";
     if (unit.elite) h += '<span class="badge b-red kw" data-kw="ÉLITE" title="Cliquez pour la définition">ÉLITE</span>'; else h += '<span class="badge b-zinc">Troupe</span>';
     h += '<span style="margin-left:auto"></span>';
-    h += '<span class="cost">' + c.total + ' ♛</span><span style="font-size:11px;color:#71717a">base ' + c.base + " + éq. " + c.equip + " + pov. " + c.powers + (c.opts ? " + amél. " + c.opts : "") + "</span>";
-    if (state.mode !== "game") h += '<span class="del" data-act="remove-unit" data-uid="' + entry.uid + '" style="border:1px solid #9f1239;background:rgba(76,5,25,.4);border-radius:4px;padding:2px 8px;font-size:11px">✕ Renvoyer</span>';
-    h += '<span style="color:#71717a">' + (isCollapsed ? "▸" : "▾") + "</span>";
+    h += '<span class="cost">' + c.total + ' ♛</span><span style="font-size:11px;color:#6e6e78">base ' + c.base + " + éq. " + c.equip + " + pov. " + c.powers + (c.opts ? " + amél. " + c.opts : "") + "</span>";
+    if (state.mode !== "game") h += '<span class="del" data-act="remove-unit" data-uid="' + entry.uid + '" style="border:1px solid #f1a3b4;background:rgba(244,63,94,.10);border-radius:4px;padding:2px 8px;font-size:11px">✕ Renvoyer</span>';
+    h += '<span style="color:#6e6e78">' + (isCollapsed ? "▸" : "▾") + "</span>";
     h += "</div>";
 
     if (state.mode === "game") {
-      h += '<div class="mk">' + markerCtl(entry, "blood", "Sang", "sang") + markerCtl(entry, "bless", "Bénédiction", "bene");
+      h += '<div class="mk">' + markerCtl(entry, "blood", "Sang", "sang") + markerCtl(entry, "bless", "Bénédiction", "bene") + markerCtl(entry, "infect", "Infection", "inf");
       h += '<div class="mkr"><button class="btn" data-act="mk-reset" data-uid="' + entry.uid + '">↺ Remise à zéro</button> <button class="btn" data-act="mk-reset-all">↺ Tous les profils</button></div></div>';
     }
     if (!isCollapsed) {
@@ -2071,6 +2322,7 @@ function render() {
 
       h += '<div class="sec">Mots-clés</div><div>';
       (unit.keywords || []).forEach(function (k) { h += kwBadge(k); });
+      h += eqKwBadges(unit, entry);
       h += "</div>";
       if (unit.constraint) h += '<p class="rule"><b>† ' + esc(unit.constraint) + "</b></p>";
 
@@ -2082,7 +2334,7 @@ function render() {
       if (unit.id === "saint" && f.id === "cour") {
         h += '<div class="sec">Aura démoniaque — selon le péché de la bande</div>';
         if (state.sin) h += '<p class="rule"><b>✠ ' + esc(AURAS[state.sin].title) + " :</b> " + esc(AURAS[state.sin].text) + "</p>";
-        else h += '<p class="rule" style="color:#71717a">Sélectionnez le péché capital de la bande pour révéler l\u2019aura.</p>';
+        else h += '<p class="rule" style="color:#6e6e78">Sélectionnez le péché capital de la bande pour révéler l\u2019aura.</p>';
       }
 
       h += fixedEquipHtml(unit);
@@ -2100,7 +2352,7 @@ function render() {
             if ((entry.opts || []).indexOf(o.id) >= 0) return;
             var why = optBlocked(o, entry);
             h += '<div class="opt"><b>' + esc(o.name) + '</b> <span class="badge b-amber">' + o.cost + ' ♛</span> <span class="meta" style="display:inline">' + esc(o.note || "") + "</span>";
-            h += why ? '<div class="meta" style="color:#fb7185">' + esc(why) + "</div>"
+            h += why ? '<div class="meta" style="color:#be123c">' + esc(why) + "</div>"
                      : '<div style="margin-top:4px"><button class="btn" data-act="add-opt" data-uid="' + entry.uid + '" data-opt="' + o.id + '">+ Prendre cette amélioration</button></div>';
             h += "</div>";
           });
@@ -2115,9 +2367,9 @@ function render() {
           if (!it) return;
           h += '<div class="item">' + (state.mode === "game" ? "" : '<span class="del" data-act="remove-equip" data-uid="' + entry.uid + '" data-idx="' + i + '">✕ retirer</span>');
           h += "<b>" + esc(it.name) + '</b> <span class="badge b-amber">' + (it.cost != null ? it.cost + " ♛" : it.glory + " ⊙") + '</span> <span class="badge b-zinc">' + CATS[it.cat] + "</span> " + badges(it);
-          if (it.profile) h += '<div class="meta">' + esc(it.profile.type) + " · Portée " + esc(it.profile.portee) + ' · <span class="kw">' + esc(it.profile.kw) + "</span></div>";
-          if (it.rule) h += '<div class="meta"><b style="color:#fca5a5">' + esc(it.rule.title) + " :</b> " + esc(it.rule.text) + "</div>";
-          if (!it.specific) h += '<div class="meta" style="color:#52525b">Profil détaillé : voir Livre de Règles.</div>';
+          if (it.profile) h += '<div class="meta">' + esc(it.profile.type) + " · Portée " + esc(it.profile.portee) + ' · ' + kwList(it.profile.kw) + "</div>";
+          if (it.rule) h += '<div class="meta"><b style="color:#b91c1c">' + esc(it.rule.title) + " :</b> " + esc(it.rule.text) + "</div>";
+          if (!it.specific) h += '<div class="meta" style="color:#6e6e78">Profil détaillé : voir Livre de Règles.</div>';
           h += "</div>";
         });
       }
@@ -2186,28 +2438,42 @@ function render() {
 
   if (state.mode === "game" && state.roster.length > 1) h += gameNav(true);
   h += "</main></div>";
+  h += "</div>";
+  if (state.view === "keywords") h += kwPage();
   h += '<footer>Données issues de « Bandes de Trench Crusade » v4 (édition française) — outil d\u2019aide au recrutement pour usage personnel. Les profils des armes communes figurent dans le Livre de Règles. La bande est sauvegardée automatiquement dans ce navigateur. Les objets payés en Points de Gloire (⊙) et les mercenaires ne sont pas achetables à la création de bande (référence uniquement).</footer>';
 
   if (state.exportOpen) {
     h += '<div class="modal-bg" data-act="close-export"><div class="modal" data-act="stop"><div class="mh">';
-    h += '<div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#fef3c7">Export de la fiche de bande</div>';
-    h += '<div><button class="btn amber" data-act="copy-export" id="copyBtn">Copier le texte</button> <button class="btn" data-act="close-export">Fermer</button></div></div>';
-    h += '<textarea readonly id="exportArea">' + esc(buildExport()) + "</textarea></div></div>";
+    h += '<div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#7c2d12">Export de la fiche de bande</div>';
+    h += '<div><button class="btn' + (state.exportFmt !== "json" ? " amber" : "") + '" data-act="export-fmt" data-fmt="text">Texte</button> <button class="btn' + (state.exportFmt === "json" ? " amber" : "") + '" data-act="export-fmt" data-fmt="json">JSON</button> <button class="btn amber" data-act="copy-export" id="copyBtn" data-lbl="Copier">Copier</button> <button class="btn" data-act="close-export">Fermer</button></div></div>';
+    h += '<textarea readonly id="exportArea">' + esc(state.exportFmt === "json" ? buildJson() : buildExport()) + "</textarea></div></div>";
   }
 
-  if (state.kwDef && KEYWORD_DEFS[state.kwDef]) {
-    var kd = KEYWORD_DEFS[state.kwDef];
+  if (state.importOpen) {
+    h += '<div class="modal-bg" data-act="close-import"><div class="modal" style="max-width:620px" data-act="stop"><div class="mh">';
+    h += '<div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#7c2d12">Importer une bande (JSON)</div>';
+    h += '<button class="btn" data-act="close-import">Fermer</button></div>';
+    h += '<div style="padding:14px 16px;font-size:13px;line-height:1.6;color:#3f3f46">';
+    h += '<p style="margin:0 0 10px">Choisissez un fichier <b>.json</b> ou collez son contenu. Formats acceptés : l’export JSON de cet outil, une bande sauvegardée, ou plusieurs bandes à la fois (elles sont alors ajoutées à « Mes bandes »). L’import d’une seule bande remplace la bande en cours.</p>';
+    h += '<input type="file" id="importFile" accept=".json,application/json,text/plain" style="display:block;margin-bottom:10px;color:#3f3f46" />';
+    h += '<textarea id="importArea" placeholder="…ou collez ici le JSON de la bande" style="width:100%;height:150px;background:#ffffff;color:#27272a;border:1px solid #d4ccba;border-radius:6px;padding:8px;font-family:monospace;font-size:12px;box-sizing:border-box"></textarea>';
+    if (state.importMsg) h += '<div class="' + (state.importOk ? "imp-ok" : "imp-err") + '">' + esc(state.importMsg) + "</div>";
+    h += '<div style="margin-top:12px"><button class="btn amber" data-act="do-import">⬆ Importer</button></div></div></div></div>';
+  }
+
+  if (state.kwDef) {
+    var kd = kwLookup(state.kwDef) || { type: "Définition manquante", text: "La définition de ce mot-clé n’est pas encore enregistrée dans l’outil. Consultez le Glossaire du Livre de Règles (p. 14-19)." };
     h += '<div class="modal-bg" data-act="close-kw"><div class="modal" style="max-width:560px" data-act="stop">';
-    h += '<div class="mh"><div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#fef3c7">' + esc(state.kwDef) + ' <span class="badge b-zinc">' + esc(kd.type) + '</span></div>';
+    h += '<div class="mh"><div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#7c2d12">' + esc(state.kwDef) + ' <span class="badge b-zinc">' + esc(kd.type) + '</span></div>';
     h += '<button class="btn" data-act="close-kw">Fermer</button></div>';
-    h += '<div style="padding:14px 16px;font-size:13.5px;line-height:1.65;color:#d4d4d8">' + esc(kd.text) + "</div></div></div>";
+    h += '<div style="padding:14px 16px;font-size:13.5px;line-height:1.65;color:#3f3f46">' + esc(kd.text) + "</div></div></div>";
   }
 
   if (state.bandsOpen) {
     var bands = getBands();
     var bkeys = Object.keys(bands);
     h += '<div class="modal-bg" data-act="close-bands"><div class="modal" style="max-width:680px" data-act="stop">';
-    h += '<div class="mh"><div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#fef3c7">💾 Mes bandes sauvegardées</div><button class="btn" data-act="close-bands">Fermer</button></div>';
+    h += '<div class="mh"><div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#7c2d12">💾 Mes bandes sauvegardées</div><button class="btn" data-act="close-bands">Fermer</button></div>';
     h += '<div style="padding:14px 16px;max-height:60vh;overflow:auto">';
     h += '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn amber" data-act="save-band">💾 Sauvegarder la bande en cours</button><span class="meta" style="margin:0">sous le nom « ' + esc(state.name) + " » (le nom se modifie dans l'en-tête, à gauche du bouton)</span></div>";
     if (!bkeys.length) h += '<p class="meta" style="margin-top:12px">Aucune bande sauvegardée pour l\u2019instant. Constituez une bande puis sauvegardez-la : elle restera disponible ici, même après fermeture du navigateur.</p>';
@@ -2218,7 +2484,7 @@ function render() {
       var bf = b.faction && FACTIONS[b.faction] ? FACTIONS[b.faction] : null;
       var bsin = b.sin ? (SINS.filter(function (s) { return s.id === b.sin; })[0] || { label: b.sin }).label : null;
       h += '<div class="item" style="margin-top:8px"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">';
-      h += '<div><b style="color:#fafafa">' + esc(b.name) + '</b> <span class="badge b-zinc">' + (bf ? esc(bf.name) : "—") + "</span> " + (bsin ? '<span class="badge b-zinc">' + esc(bsin) + "</span> " : "") + '<span class="badge b-zinc">' + (b.roster || []).length + " figurine" + ((b.roster || []).length > 1 ? "s" : "") + '</span> <span class="badge b-amber">' + bcost + ' ♛</span><div class="meta">Sauvegardée le ' + esc(b.date || "—") + "</div></div>";
+      h += '<div><b style="color:#18181b">' + esc(b.name) + '</b> <span class="badge b-zinc">' + (bf ? esc(bf.name) : "—") + "</span> " + (bsin ? '<span class="badge b-zinc">' + esc(bsin) + "</span> " : "") + '<span class="badge b-zinc">' + (b.roster || []).length + " figurine" + ((b.roster || []).length > 1 ? "s" : "") + '</span> <span class="badge b-amber">' + bcost + ' ♛</span><div class="meta">Sauvegardée le ' + esc(b.date || "—") + "</div></div>";
       h += '<div style="white-space:nowrap"><button class="btn amber" data-act="load-band" data-band="' + id + '">Charger</button> <button class="btn" data-act="del-band" data-band="' + id + '">✕ Supprimer</button></div>';
       h += "</div></div>";
     });
@@ -2227,23 +2493,23 @@ function render() {
 
   if (state.mercOpen) {
     h += '<div class="modal-bg" data-act="close-merc"><div class="modal" style="max-width:760px" data-act="stop">';
-    h += '<div class="mh"><div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#fef3c7">⚔ Mercenaires — référence</div><button class="btn" data-act="close-merc">Fermer</button></div>';
+    h += '<div class="mh"><div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#7c2d12">⚔ Mercenaires — référence</div><button class="btn" data-act="close-merc">Fermer</button></div>';
     h += '<div style="padding:14px 16px;max-height:65vh;overflow:auto">';
     h += '<p class="meta" style="margin:0 0 10px">Les mercenaires se recrutent avec des Points de Gloire (⊙) gagnés en jeu, pas avec des ducats : ils ne peuvent pas être ajoutés à la création de bande. Liste fournie à titre de référence.</p>';
     MERCENARIES.forEach(function (m) {
-      h += '<div class="item"><b style="color:#fafafa">' + esc(m.name) + '</b> <span class="badge b-amber">' + m.glory + ' ⊙</span> <span class="badge b-zinc">' + esc(m.factions) + "</span>";
+      h += '<div class="item"><b style="color:#18181b">' + esc(m.name) + '</b> <span class="badge b-amber">' + m.glory + ' ⊙</span> <span class="badge b-zinc">' + esc(m.factions) + "</span>";
       h += '<div class="meta">Profil : ' + esc(m.profile.m) + " · Tir " + esc(m.profile.tir) + " · CàC " + esc(m.profile.cac) + " · Armure " + esc(m.profile.armure) + " · Socle " + esc(m.profile.socle) + "</div>";
       if (m.keywords && m.keywords.length) h += '<div style="margin:4px 0">' + m.keywords.map(function (k) { return kwBadge(k); }).join("") + "</div>";
-      h += '<div class="meta"><b style="color:#fca5a5">Équipement :</b> ' + esc(m.equip) + "</div>";
-      h += '<div class="meta"><b style="color:#fca5a5">Capacités :</b> ' + esc(m.caps) + "</div></div>";
+      h += '<div class="meta"><b style="color:#b91c1c">Équipement :</b> ' + esc(m.equip) + "</div>";
+      h += '<div class="meta"><b style="color:#b91c1c">Capacités :</b> ' + esc(m.caps) + "</div></div>";
     });
     h += "</div></div></div>";
   }
 
   if (state.confirmBox) {
     h += '<div class="modal-bg" data-act="confirm-no"><div class="modal" style="max-width:460px" data-act="stop">';
-    h += '<div style="padding:16px;font-size:14px;line-height:1.6;color:#e4e4e7">⚠ ' + esc(state.confirmBox.msg) + "</div>";
-    h += '<div class="mh" style="border-top:1px solid #27272a"><span></span><div><button class="btn amber" data-act="confirm-yes">Confirmer</button> <button class="btn" data-act="confirm-no">Annuler</button></div></div>';
+    h += '<div style="padding:16px;font-size:14px;line-height:1.6;color:#27272a">⚠ ' + esc(state.confirmBox.msg) + "</div>";
+    h += '<div class="mh" style="border-top:1px solid #e2dccd"><span></span><div><button class="btn amber" data-act="confirm-yes">Confirmer</button> <button class="btn" data-act="confirm-no">Annuler</button></div></div>';
     h += "</div></div>";
   }
 
@@ -2304,18 +2570,18 @@ document.addEventListener("click", function (ev) {
     case "mk-add": {
       var me = state.roster.filter(function (e) { return e.uid === uid; })[0];
       var mkey = el.getAttribute("data-key");
-      if (me && (mkey === "blood" || mkey === "bless")) {
+      if (me && (mkey === "blood" || mkey === "bless" || mkey === "infect")) {
         me[mkey] = Math.max(0, Math.min(99, (me[mkey] || 0) + parseInt(el.getAttribute("data-d"), 10)));
       }
       break;
     }
     case "mk-reset": {
       var mr = state.roster.filter(function (e) { return e.uid === uid; })[0];
-      if (mr) { mr.blood = 0; mr.bless = 0; }
+      if (mr) { mr.blood = 0; mr.bless = 0; mr.infect = 0; }
       break;
     }
     case "mk-reset-all":
-      state.confirmBox = { act: "mk-reset-all", msg: "Remettre à zéro les marqueurs Sang et Bénédiction de tous les profils ?" };
+      state.confirmBox = { act: "mk-reset-all", msg: "Remettre à zéro les marqueurs Sang, Bénédiction et Infection de tous les profils ?" };
       break;
     case "game-prev": gameStep(-1); return;
     case "game-next": gameStep(1); return;
@@ -2334,8 +2600,10 @@ document.addEventListener("click", function (ev) {
       if (!cb) break;
       if (cb.act === "change-faction") {
         state.faction = null; state.sin = null; state.roster = []; state.collapsed = {}; state.equipOpen = null; state.powersOpen = null; state.rulesOpen = false;
+      } else if (cb.act === "import-apply") {
+        if (state.pendingImport) { applyBand(state.pendingImport); state.pendingImport = null; }
       } else if (cb.act === "mk-reset-all") {
-        state.roster.forEach(function (e) { e.blood = 0; e.bless = 0; });
+        state.roster.forEach(function (e) { e.blood = 0; e.bless = 0; e.infect = 0; });
       } else if (cb.act === "clear") {
         state.sin = null; state.roster = []; state.collapsed = {}; state.equipOpen = null; state.powersOpen = null;
       } else if (cb.act === "del-band") {
@@ -2379,7 +2647,7 @@ document.addEventListener("click", function (ev) {
         state.faction = bb.faction && FACTIONS[bb.faction] ? bb.faction : "cour";
         state.sin = bb.sin || null;
         state.name = bb.name || "Ma bande";
-        state.roster = bb.roster.map(function (e) { return { uid: e.uid, unitId: e.unitId, name: e.name, equip: e.equip || [], powers: e.powers || [], opts: e.opts || [], blood: e.blood || 0, bless: e.bless || 0 }; });
+        state.roster = bb.roster.map(function (e) { return { uid: e.uid, unitId: e.unitId, name: e.name, equip: e.equip || [], powers: e.powers || [], opts: e.opts || [], blood: e.blood || 0, bless: e.bless || 0, infect: e.infect || 0 }; });
         state.nextUid = bb.nextUid || (state.roster.length + 1);
         state.collapsed = {}; state.equipOpen = null; state.powersOpen = null; state.bandsOpen = false;
       }
@@ -2415,6 +2683,29 @@ document.addEventListener("click", function (ev) {
       break;
     }
     case "open-export": state.exportOpen = true; break;
+    case "tab-band": state.view = "band"; break;
+    case "tab-kw": state.view = "keywords"; state.gameScroll = false; break;
+    case "export-fmt": state.exportFmt = el.getAttribute("data-fmt") === "json" ? "json" : "text"; break;
+    case "open-import": state.importOpen = true; state.importMsg = ""; state.importOk = false; break;
+    case "close-import": state.importOpen = false; break;
+    case "do-import": {
+      var fi = document.getElementById("importFile");
+      var ta2 = document.getElementById("importArea");
+      var picked = fi && fi.files && fi.files[0];
+      if (picked) {
+        var fr = new FileReader();
+        fr.onload = function () { doImport(String(fr.result)); };
+        fr.onerror = function () { state.importMsg = "Lecture du fichier impossible."; state.importOk = false; render(); };
+        fr.readAsText(picked);
+        return;
+      } else if (ta2 && ta2.value.trim()) {
+        doImport(ta2.value);
+        return;
+      }
+      state.importMsg = "Choisissez un fichier .json ou collez le contenu JSON.";
+      state.importOk = false;
+      break;
+    }
     case "close-export": state.exportOpen = false; break;
     case "copy-export":
       try {
@@ -2423,7 +2714,7 @@ document.addEventListener("click", function (ev) {
         document.execCommand("copy");
         if (navigator.clipboard) navigator.clipboard.writeText(ta.value);
         el.textContent = "✔ Copié !";
-        setTimeout(function () { el.textContent = "Copier le texte"; }, 2000);
+        setTimeout(function () { el.textContent = el.getAttribute("data-lbl") || "Copier le texte"; }, 2000);
       } catch (e) {}
       return;
     default: return;
@@ -2433,6 +2724,20 @@ document.addEventListener("click", function (ev) {
 });
 
 document.addEventListener("input", function (ev) {
+  var ks = ev.target && ev.target.id === "kwSearch" ? ev.target : null;
+  if (ks) {
+    state.kwQuery = ks.value;
+    var qq = ks.value.toLowerCase().trim();
+    document.querySelectorAll(".kwrow").forEach(function (r) {
+      r.style.display = !qq || (r.getAttribute("data-s") || "").indexOf(qq) >= 0 ? "" : "none";
+    });
+    document.querySelectorAll(".kwgrp").forEach(function (g) {
+      var n = g.nextElementSibling, any = false;
+      while (n && n.classList.contains("kwrow")) { if (n.style.display !== "none") any = true; n = n.nextElementSibling; }
+      g.style.display = any ? "" : "none";
+    });
+    return;
+  }
   var elB = ev.target.closest ? ev.target.closest('[data-act="rename-band"]') : null;
   if (elB) { state.name = elB.value.trim() || "Ma bande"; save(); return; }
   var el = ev.target.closest('[data-act="rename"]');
@@ -2475,8 +2780,8 @@ try {
 } catch (err) {
   try {
     document.getElementById("app").innerHTML =
-      '<h1 style="color:#f87171;font-family:sans-serif">Erreur au démarrage</h1>' +
-      '<p style="font-family:monospace;color:#f87171">' +
+      '<h1 style="color:#b91c1c;font-family:sans-serif">Erreur au démarrage</h1>' +
+      '<p style="font-family:monospace;color:#b91c1c">' +
       String(err && err.message ? err.message : err) + "</p>";
   } catch (e2) {}
 }
