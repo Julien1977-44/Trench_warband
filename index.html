@@ -1983,13 +1983,18 @@ function parseImport(text) {
   function pick(o) {
     if (o && typeof o === "object" && Array.isArray(o.roster)) list.push(o);
   }
+  function collect(o, depth) {
+    if (!o || typeof o !== "object" || depth > 4) return;
+    if (Array.isArray(o.roster)) { list.push(o); return; }
+    Object.keys(o).forEach(function (k) { collect(o[k], depth + 1); });
+  }
   if (Array.isArray(data)) {
     if (data.length && data[0] && data[0].unitId) pick({ roster: data });
-    else data.forEach(pick);
+    else data.forEach(function (o) { collect(o, 1); });
   } else if (data && Array.isArray(data.roster)) {
     pick(data);
   } else if (data && typeof data === "object") {
-    Object.keys(data).forEach(function (k) { pick(data[k]); });
+    collect(data, 0);
   }
   if (!list.length) return { error: "Aucune bande reconnue : le JSON doit contenir un champ « roster » (liste des figurines)." };
   var skipped = 0;
@@ -2003,7 +2008,7 @@ function parseImport(text) {
     var fid = b.faction && FACTIONS[b.faction] ? b.faction : (roster.length ? factionOfUnit(roster[0].unitId) : null);
     if (!fid) return;
     var sin = SINS.some(function (s) { return s.id === b.sin; }) ? b.sin : null;
-    bands.push({ name: typeof b.name === "string" && b.name.trim() ? b.name.trim() : "Bande importée", faction: fid, sin: sin, roster: roster });
+    bands.push({ name: typeof b.name === "string" && b.name.trim() ? b.name.trim() : "Bande importée", faction: fid, sin: sin, date: typeof b.date === "string" ? b.date : null, roster: roster });
   });
   if (!bands.length) return { error: "Faction de la bande introuvable dans ce JSON." };
   return { bands: bands, skipped: skipped };
@@ -2028,7 +2033,7 @@ function doImport(text) {
     res.bands.forEach(function (b) {
       var sid = String(Date.now()) + "-i" + (i++);
       while (bs[sid]) sid += "x";
-      bs[sid] = { name: b.name, faction: b.faction, sin: b.sin, roster: b.roster, nextUid: b.roster.length + 1, date: new Date().toLocaleDateString("fr-FR") };
+      bs[sid] = { name: b.name, faction: b.faction, sin: b.sin, roster: b.roster, nextUid: b.roster.length + 1, date: b.date || new Date().toLocaleDateString("fr-FR") };
     });
     setBands(bs);
     state.importMsg = "✔ " + res.bands.length + " bandes ajoutées à « Mes bandes »." + extra;
