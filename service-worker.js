@@ -1,21 +1,24 @@
 // Service worker : fonctionnement hors ligne.
-// Stratégie « réseau d'abord » : si le téléphone est en ligne, il charge la dernière version
-// et la met en cache ; hors ligne, il utilise la dernière version mise en cache.
+// Stratégie « réseau d'abord » : en ligne, la dernière version est chargée et mise en cache ;
+// hors ligne, la dernière version mise en cache est utilisée.
 // Pour forcer une mise à jour du cache, changer le numéro de version ci-dessous.
-const CACHE = "tc-bande-v1";
+const CACHE = "tc-bande-v2";
 const ASSETS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/icon-maskable-512.png",
-  "./icons/apple-touch-icon.png"
+  "./icon-192.png",
+  "./icon-512.png",
+  "./icon-maskable-512.png",
+  "./apple-touch-icon.png"
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE)
+      // un fichier introuvable ne doit pas empêcher l'installation du service worker
+      .then((cache) => Promise.all(ASSETS.map((url) => cache.add(url).catch(() => null))))
+      .then(() => self.skipWaiting())
   );
 });
 
